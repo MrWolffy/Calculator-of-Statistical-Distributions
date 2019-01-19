@@ -1,0 +1,26 @@
+<!--pages/normaldist/normaldist.wxml-->
+<view class="container">
+  <view class="prompt">mu = 0, sigma = 1</view>
+  <view class="sub-container">
+    <view class="title">计算分布函数</view>
+    <form bindsubmit='submitCalNormCdf'>
+      <view class="cal-prompt">x = </view>
+      <input type="digit" name="x" min="-100" max="100"></input>
+      <button class="submit" form-type='submit'>计算</button>
+      <view class="result-prompt">p = </view>
+      <view wx:if="{{!getp}}"></view>
+      <view wx:else class="result">{{p}}</view>
+    </form>
+  </view>
+  <view class="sub-container">
+    <view class="title">计算分布函数的反函数</view>
+    <form bindsubmit='submitCalInvNormCdf'>
+      <view class="cal-prompt">p = </view>
+      <input type="digit" name="p" min="-100" max="100"></input>
+      <button class="submit" form-type='submit'>计算</button>
+      <view class="result-prompt">x = </view>
+      <view wx:if="{{!getx}}"></view>
+      <view wx:else class="result">{{x}}</view>
+    </form>
+  </view>
+</view>
