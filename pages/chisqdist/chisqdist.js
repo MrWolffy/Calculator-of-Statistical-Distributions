@@ -21,8 +21,14 @@ function calChiCdf(x, df) {
 }
 
 function calInvChiCdf(p, df) {
-  let left = -0, right = 10, ans, eps = 0.01
+  let left = -0, right = 100, ans, eps = 0.01
+  let t1 = new Date()
   while (Math.abs(right - left) > eps) {
+    let t2 = new Date()
+    if (t2.getTime() - t1.getTime() > 3000) return {
+      ans: ans,
+      error: true,
+    }
     ans = (left + right) / 2
     if (calChiCdf(ans, df) < p) {
       left = ans
@@ -34,10 +40,18 @@ function calInvChiCdf(p, df) {
   eps = 1e-6
   let tmp = calChiCdf(ans, df) - p
   while (Math.abs(tmp) > eps) {
+    let t2 = new Date()
+    if (t2.getTime() - t1.getTime() > 3000) return {
+      ans: ans,
+      error: true,
+    }
     ans = ans - tmp / chiDist(ans, df)
     tmp = calChiCdf(ans, df) - p
   }
-  return ans
+  return {
+    ans: ans,
+    error: false,
+  }
 }
 
 Page({
@@ -48,8 +62,10 @@ Page({
   data: {
     p: 0,
     getp: false,
+    situationp: false,
     x: 0,
-    getx: false
+    getx: false,
+    situationx: false,
   },
 
   /**
@@ -121,9 +137,11 @@ Page({
 
   submitCalInvChiCdf(e) {
     console.log(e.detail.value)
+    let ans = calInvChiCdf(Number(e.detail.value.p), Number(e.detail.value.df))
     this.setData({
-      x: calInvChiCdf(Number(e.detail.value.p), Number(e.detail.value.df)),
+      x: ans.ans,
       getx: true,
+      situationx: ans.error,
     })
   }
 })

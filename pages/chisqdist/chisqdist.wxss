@@ -57,3 +57,7 @@ input {
   float: none;
   width: 100%;
 }
+
+.error {
+  color: red;
+}

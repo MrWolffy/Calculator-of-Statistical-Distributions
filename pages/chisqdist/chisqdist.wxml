@@ -32,6 +32,8 @@
       <view class="result-prompt">x = </view>
       <view wx:if="{{!getx}}"></view>
       <view wx:else class="result">{{x}}</view>
+      <view wx:if="{{!situationx}}"></view>
+      <view wx:else class="error">算法达到时间上限提前结束，结果可能不准确</view>
     </form>
   </view>
 </view>

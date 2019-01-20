@@ -19,7 +19,6 @@ function calFCdf(x, df1, df2) {
   let ans = 0, h = 0.001, a = -1 + Math.abs(x - Math.floor(x)), b = x
   for (let i = a; i < b; i = i + h) {
     ans = ans + 14 * FDist(i, df1, df2) + 32 * FDist(i + h / 4, df1, df2) + 12 * FDist(i + h / 2, df1, df2) + 32 * FDist(i + h / 4 * 3, df1, df2)
-    // console.log(FDist(i, df1, df2))
   }
   ans = ans - 7 * FDist(a, df1, df2) + 7 * FDist(b, df1, df2)
   return ans * h / 90
@@ -27,7 +26,15 @@ function calFCdf(x, df1, df2) {
 
 function calInvFCdf(p, df1, df2) {
   let left = 1, right = 10, ans, eps = 0.01
+  let t1 = new Date()
   while (Math.abs(right - left) > eps) {
+    let t2 = new Date()
+    if (t2.getTime() - t1.getTime() > 3000) {
+      return {
+        ans: ans,
+        error: true,
+      }
+    }
     ans = (left + right) / 2
     if (calFCdf(ans, df1, df2) < p) {
       left = ans
@@ -39,10 +46,20 @@ function calInvFCdf(p, df1, df2) {
   eps = 1e-6
   let tmp = calFCdf(ans, df1, df2) - p
   while (Math.abs(tmp) > eps) {
+    let t2 = new Date()
+    if (t2.getTime() - t1.getTime() > 3000) {
+      return {
+        ans: ans,
+        error: true,
+      }
+    }
     ans = ans - tmp / FDist(ans, df1, df2)
     tmp = calFCdf(ans, df1, df2) - p
   }
-  return ans
+  return {
+    ans: ans,
+    error: false,
+  }
 }
 
 Page({
@@ -54,7 +71,8 @@ Page({
     p: 0,
     getp: false,
     x: 0,
-    getx: false
+    getx: false,
+    situationx: false,
   },
 
   /**
@@ -126,9 +144,11 @@ Page({
 
   submitCalInvFCdf(e) {
     console.log(e.detail.value)
+    let ans = calInvFCdf(Number(e.detail.value.p), Number(e.detail.value.df1), Number(e.detail.value.df2))
     this.setData({
-      x: calInvFCdf(Number(e.detail.value.p), Number(e.detail.value.df1), Number(e.detail.value.df2)),
+      x: ans.ans,
       getx: true,
+      situationx: ans.error,
     })
   }
 })

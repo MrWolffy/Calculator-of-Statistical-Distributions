@@ -1,14 +1,10 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <block wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></block>
-    <block wx:else>
-      <!--<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>-->
-      <text class="userinfo-nickname">你好，{{userInfo.nickName}}</text>
-    </block>
+    <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+    <view>你好，<open-data type="userNickName"></open-data></view>
   </view>
   <view class="usermotto">
-    <!--<text class="user-motto">{{motto}}</text>-->
     <navigator class="choosedist" url="../normaldist/normaldist"><button>正态分布</button></navigator>
     <navigator class="choosedist" url="../tdist/tdist"><button>t分布</button></navigator>
     <navigator class="choosedist" url="../fdist/fdist"><button>F分布</button></navigator>
