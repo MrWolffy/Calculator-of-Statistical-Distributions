@@ -25,7 +25,7 @@ function calInvChiCdf(p, df) {
   let t1 = new Date()
   while (Math.abs(right - left) > eps) {
     let t2 = new Date()
-    if (t2.getTime() - t1.getTime() > 3000) return {
+    if (t2.getTime() - t1.getTime() > 5000) return {
       ans: ans,
       error: true,
     }
@@ -41,7 +41,7 @@ function calInvChiCdf(p, df) {
   let tmp = calChiCdf(ans, df) - p
   while (Math.abs(tmp) > eps) {
     let t2 = new Date()
-    if (t2.getTime() - t1.getTime() > 3000) return {
+    if (t2.getTime() - t1.getTime() > 5000) return {
       ans: ans,
       error: true,
     }
@@ -63,9 +63,11 @@ Page({
     p: 0,
     getp: false,
     situationp: false,
+    loadingp: false,
     x: 0,
     getx: false,
     situationx: false,
+    loadingx: false,
   },
 
   /**
@@ -123,25 +125,37 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '统计分布计算器',
-      path: '/pages/index'
+      path: '/pages/index/index'
     }
   },
 
   submitCalChiCdf(e) {
     console.log(e.detail.value)
     this.setData({
+      loadingp: true,
+    })
+    this.setData({
       p: calChiCdf(Number(e.detail.value.x), Number(e.detail.value.df)),
       getp: true,
+    })
+    this.setData({
+      loadingp: false,
     })
   },
 
   submitCalInvChiCdf(e) {
     console.log(e.detail.value)
+    this.setData({
+      loadingx: true,
+    })
     let ans = calInvChiCdf(Number(e.detail.value.p), Number(e.detail.value.df))
     this.setData({
       x: ans.ans,
       getx: true,
       situationx: ans.error,
+    })
+    this.setData({
+      loadingx: false,
     })
   }
 })

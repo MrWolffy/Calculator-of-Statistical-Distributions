@@ -11,7 +11,7 @@
         <view class="cal-prompt">df = </view>
         <input type="digit" name="df" min="0"></input>
       </view>
-      <button class="submit" form-type='submit'>计算</button>
+      <button class="submit" form-type='submit' loading='{{loadingp}}'>计算</button>
       <view class="result-prompt">p = </view>
       <view wx:if="{{!getp}}"></view>
       <view wx:else class="result">{{p}}</view>
@@ -28,7 +28,7 @@
         <view class="cal-prompt">df = </view>
         <input type="digit" name="df" min="0"></input>
       </view>
-      <button class="submit" form-type='submit'>计算</button>
+      <button class="submit" form-type='submit' loading='{{loadingx}}'>计算</button>
       <view class="result-prompt">x = </view>
       <view wx:if="{{!getx}}"></view>
       <view wx:else class="result">{{x}}</view>

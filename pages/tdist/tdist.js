@@ -47,8 +47,10 @@ Page({
   data: {
     p: 0,
     getp: false,
+    loadingp: false,
     x: 0,
-    getx: false
+    getx: false,
+    loadingx: false,
   },
 
   /**
@@ -106,23 +108,35 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '统计分布计算器',
-      path: '/pages/index'
+      path: '/pages/index/index'
     }
   },
 
   submitCalTCdf(e) {
     console.log(e.detail.value)
     this.setData({
+      loadingp: true,
+    })
+    this.setData({
       p: calTCdf(Number(e.detail.value.x), Number(e.detail.value.df)),
       getp: true,
+    })
+    this.setData({
+      loadingp: false,
     })
   },
 
   submitCalInvTCdf(e) {
     console.log(e.detail.value)
     this.setData({
+      loadingx: true,
+    })
+    this.setData({
       x: calInvTCdf(Number(e.detail.value.p), Number(e.detail.value.df)),
       getx: true,
+    })
+    this.setData({
+      loadingx: false,
     })
   }
 })

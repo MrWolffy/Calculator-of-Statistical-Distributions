@@ -32,8 +32,10 @@ Page({
   data: {
     p: 0,
     getp: false,
+    loadingp: false,
     x: 0,
-    getx: false
+    getx: false,
+    loadingx: false,
   },
 
   /**
@@ -91,23 +93,35 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '统计分布计算器',
-      path: '/pages/index'
+      path: '/pages/index/index'
     }
   },
 
   submitCalNormCdf(e) {
     console.log(e.detail.value)
     this.setData({
+      loadingp: true,
+    })
+    this.setData({
       p: calNormCdf(Number(e.detail.value.x)),
       getp: true,
+    })
+    this.setData({
+      loadingp: false,
     })
   },
 
   submitCalInvNormCdf(e) {
     console.log(e.detail.value)
     this.setData({
+      loadingx: true,
+    })
+    this.setData({
       x: calInvNormCdf(Number(e.detail.value.p)),
       getx: true,
+    })
+    this.setData({
+      loadingx: false,
     })
   }
 })

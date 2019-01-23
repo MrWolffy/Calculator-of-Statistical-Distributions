@@ -29,7 +29,7 @@ function calInvFCdf(p, df1, df2) {
   let t1 = new Date()
   while (Math.abs(right - left) > eps) {
     let t2 = new Date()
-    if (t2.getTime() - t1.getTime() > 3000) {
+    if (t2.getTime() - t1.getTime() > 5000) {
       return {
         ans: ans,
         error: true,
@@ -47,7 +47,7 @@ function calInvFCdf(p, df1, df2) {
   let tmp = calFCdf(ans, df1, df2) - p
   while (Math.abs(tmp) > eps) {
     let t2 = new Date()
-    if (t2.getTime() - t1.getTime() > 3000) {
+    if (t2.getTime() - t1.getTime() > 5000) {
       return {
         ans: ans,
         error: true,
@@ -70,9 +70,11 @@ Page({
   data: {
     p: 0,
     getp: false,
+    loadingp: false,
     x: 0,
     getx: false,
     situationx: false,
+    loadingx: false,
   },
 
   /**
@@ -130,25 +132,37 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '统计分布计算器',
-      path: '/pages/index'
+      path: '/pages/index/index'
     }
   },
 
   submitCalFCdf(e) {
     console.log(e.detail.value)
     this.setData({
+      loadingp: true,
+    })
+    this.setData({
       p: calFCdf(Number(e.detail.value.x), Number(e.detail.value.df1), Number(e.detail.value.df2)),
       getp: true,
+    })
+    this.setData({
+      loadingp: false,
     })
   },
 
   submitCalInvFCdf(e) {
     console.log(e.detail.value)
+    this.setData({
+      loadingx: true,
+    })
     let ans = calInvFCdf(Number(e.detail.value.p), Number(e.detail.value.df1), Number(e.detail.value.df2))
     this.setData({
       x: ans.ans,
       getx: true,
       situationx: ans.error,
+    })
+    this.setData({
+      loadingx: false,
     })
   }
 })

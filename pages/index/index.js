@@ -7,7 +7,7 @@ Page({
   onShareAppMessage() {
     return {
       title: '统计分布计算器',
-      path: '/pages/index'
+      path: '/pages/index/index'
     }
   },
   
